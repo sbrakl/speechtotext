@@ -1,0 +1,68 @@
+/*!
+ * Start Bootstrap - The Big Picture (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+body {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	background: none;
+}
+
+.full {
+  background: url(../images/background.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.opaquetext {
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.microphone {
+	width: 140px;
+	height: 140px;
+	display: inline-block;    
+	text-align: center;
+}
+
+.microphone img {
+	width: 85%;	
+}
+
+.microphone p {
+	text-align: center;
+}
+
+.opaquered {
+	background: rgba(255, 204, 204, 0.8);
+}
+
+.spacer { 
+	margin:0; padding:0; height:10px; 
+}
+
+.add-btn {
+	background-color: #ff6666;
+}
+
+.remove-btn {
+	background-color: #66ff66;
+}
+
+.marginL-15 {
+    margin-left: 15px;    
+}
+
+.marginR-15 {
+    margin-right: 15px;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: left;
+}
