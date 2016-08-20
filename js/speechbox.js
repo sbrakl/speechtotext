@@ -43,16 +43,15 @@ var speechToTextBlock = function (micId, outputTextId) {
 
         client.onFinalResponseReceived = function (response) {
             console.log("Client Final Response Log");
-            setText(response[0]);
-        }
-
-        client.onIntentReceived = function (response) {
-            setText(response);
-        };        
+            //Now we have get the respose, check and set the state
+            if (response[0]) {
+                setText(response[0]);
+            }
+            toogleStopState();
+        }          
     }
 
-    function setText(response) {
-        console.log(response);
+    function setText(response) {        
         var text = " " + response.display;
         $outputTextArea.append(text);
     }
@@ -70,7 +69,10 @@ var speechToTextBlock = function (micId, outputTextId) {
         micState = recordState.RECORDING;
         client.startMicAndRecognition();
         setTimeout(function () {
-            toogleStopState();
+            //Time out is set to 3 secs, and it should be in recording state
+            if (micState == recordState.RECORDING) {
+                toogleStopAndProcessState();
+            }            
         }, 3000);
     }
 
@@ -84,6 +86,16 @@ var speechToTextBlock = function (micId, outputTextId) {
         client.endMicAndRecognition();
     }
 
+    function toogleStopAndProcessState() {
+
+        //Change the image button src and text
+        $imgBtn.attr("src", "images/processing.gif");
+        $imgBtn.removeClass('record');
+        $imgBtn.siblings("#infotext").text("Processing...");
+        micState = recordState.PROCESSING;
+        client.endMicAndRecognition();
+    }
+
     return {
         init: function () {
             //Register the click handler on the mic
@@ -92,7 +104,7 @@ var speechToTextBlock = function (micId, outputTextId) {
                     toogleRecordState();
                 }
                 else {
-                    toogleStopState();
+                    toogleStopAndProcessState();
                 }                
             });
 

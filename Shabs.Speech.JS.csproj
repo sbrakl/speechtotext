@@ -58,7 +58,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CONTRIBUTING.md" />
     <Content Include="docs\speech.1.0.0.js\app-0c945a27f43452df695771ddb60b3d14.js" />
     <Content Include="docs\speech.1.0.0.js\data-8de22caea5e21e18585643b835440392.js" />
     <Content Include="docs\speech.1.0.0.js\eg-iframe.html" />
@@ -496,7 +495,7 @@
     <Content Include="docs\speech.1.0.0.js\resources\prettify\prettify.js" />
     <Content Include="docs\speech.1.0.0.js\source\speech.1.0.0.html" />
     <Content Include="docs\speech.1.0.0.js\styles-8184dad50dadb76aad743829a7c19ed0.css" />
-    <Content Include="LICENSE-IMAGE.md" />
+    <Content Include="images\processing.gif" />
     <Content Include="LICENSE.md" />
     <Content Include="README.md" />
     <None Include="Web.Debug.config">
