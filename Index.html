@@ -15,6 +15,14 @@
             <h1>Speech to text</h1>
             <h3>Shabbir experiment with speech to text</h3>
         </div>    
+        <div class="row errdiv hide">
+            <div class="col-md-12">
+                <div class="alert alert-danger fade in">                    
+                    <strong>Error!</strong>
+                    <span id="errmsg">A problem has been occurred while submitting your data.</span>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <textarea id="textOutput" class="form-control" rows="6"></textarea>
@@ -25,7 +33,7 @@
                         <p id="infotext">Press mic button to record</p>
                     </div>                
             </div>      
-        </div>
+        </div>        
     </div>
     <!-- jQuery -->
     <script src="js/lib/jquery.js"></script>

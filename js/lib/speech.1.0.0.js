@@ -371,24 +371,30 @@ var Bing;
                 if (!(navigator).getUserMedia) {
                     throw "Sorry, your browser doesn't have microphone support.";
                 }
-                (navigator).getUserMedia({
-                    audio: true
-                }, function (stream) {
-                    if (!_this.context) {
-                        if (!AudioContext) {
-                            throw "Sorry, your browser doesn't support WebAudio";
+                try {
+                    (navigator).getUserMedia({
+                        audio: true
+                    }, function (stream) {
+                        if (!_this.context) {
+                            if (!AudioContext) {
+                                throw "Sorry, your browser doesn't support WebAudio";
+                            }
+                            _this.context = new AudioContext();
                         }
-                        _this.context = new AudioContext();
+                        _this.currentSource = _this.context.createMediaStreamSource(stream);
+                    }, function () {
+                        _this.HandleError();
+                    });
+                } catch (err) {
+                    if (this.onerror) {
+                        _this.onerror(err);
                     }
-                    _this.currentSource = _this.context.createMediaStreamSource(stream);
-                }, function () {
-                    _this.HandleError();
-                });
+                }
             } else {
                 this.currentSource = this.mediaSource;
             }
         };
-        Speech.prototype.stop = function () {
+        Speech.prototype.stop = function () {           
             if (this._currentSource) {
                 Platform.getCU().done(function (cu) {
                     cu.disconnect();

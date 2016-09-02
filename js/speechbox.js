@@ -20,6 +20,7 @@ var speechToTextBlock = function (micId, outputTextId) {
     var client = null;
     var $outputTextArea = $(outputTextId);
     var $imgBtn = $(micId);
+    var $errdiv = $(".errdiv")
 
     //State variable tracks the mode of the button
     //It change from stop, recording, processing
@@ -40,6 +41,7 @@ var speechToTextBlock = function (micId, outputTextId) {
 
         client.onError = function (errorCode, errorstring) {
             console.log(errorstring);
+            showerrormessage(errorstring);
             toogleErrorState();
         }
 
@@ -66,14 +68,31 @@ var speechToTextBlock = function (micId, outputTextId) {
         $outputTextArea.text("");
     }
 
+    function showerrormessage(msg) {
+        $errdiv.show();
+        $("#errmsg").html(msg);
+    }
+
+    function hideerrormessage() {
+        $errdiv.hide();
+    }
+
     function toogleRecordState() {
 
         //Change the image button src and text
+        hideerrormessage();
         $imgBtn.attr("src", "images/micanimated.gif");
         $imgBtn.addClass('record');
         $imgBtn.siblings("#infotext").text("Recording");
         micState = recordState.RECORDING;
-        client.startMicAndRecognition();
+        try {
+            client.startMicAndRecognition();
+        }
+        catch (err) {
+            console.log(err);
+            showerrormessage(err);
+            toogleErrorState();
+        }
         setTimeout(function () {
             //Time out is set to 3 secs, and it should be in recording state
             if (micState == recordState.RECORDING) {
@@ -85,6 +104,7 @@ var speechToTextBlock = function (micId, outputTextId) {
     function toogleStopState() {
 
         //Change the image button src and text
+        hideerrormessage();
         $imgBtn.attr("src", "images/micstill.png");
         $imgBtn.removeClass('record');
         $imgBtn.siblings("#infotext").text("Press mic button to record, release to stop");
@@ -98,13 +118,13 @@ var speechToTextBlock = function (micId, outputTextId) {
         $imgBtn.attr("src", "images/error.gif");
         $imgBtn.removeClass('record');
         $imgBtn.siblings("#infotext").text("Some error occured! Try again");
-        micState = recordState.ERROR;
-        client.endMicAndRecognition();
+        micState = recordState.ERROR;        
     }
 
     function toogleStopAndProcessState() {
 
         //Change the image button src and text
+        hideerrormessage();
         $imgBtn.attr("src", "images/processing.gif");
         $imgBtn.removeClass('record');
         $imgBtn.siblings("#infotext").text("Processing...");
