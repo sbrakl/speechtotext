@@ -27,6 +27,7 @@ var speechToTextBlock = function (micId, outputTextId) {
         STOP: 0,
         RECORDING: 1,
         PROCESSING: 2,
+        ERROR: 3
     }
     var micState = recordState.STOP;
 
@@ -36,6 +37,11 @@ var speechToTextBlock = function (micId, outputTextId) {
                         languangeLocale,
                         subscriptionKey,
                         subscriptionKey);
+
+        client.onError = function (errorCode, errorstring) {
+            console.log(errorstring);
+            toogleErrorState();
+        }
 
         client.onPartialResponseReceived = function (response) {
             setText(response);
@@ -86,6 +92,16 @@ var speechToTextBlock = function (micId, outputTextId) {
         client.endMicAndRecognition();
     }
 
+    function toogleErrorState() {
+
+        //Change the image button src and text
+        $imgBtn.attr("src", "images/error.gif");
+        $imgBtn.removeClass('record');
+        $imgBtn.siblings("#infotext").text("Some error occured! Try again");
+        micState = recordState.ERROR;
+        client.endMicAndRecognition();
+    }
+
     function toogleStopAndProcessState() {
 
         //Change the image button src and text
@@ -100,8 +116,11 @@ var speechToTextBlock = function (micId, outputTextId) {
         init: function () {
             //Register the click handler on the mic
             $imgBtn.on('click', function () {                
-                if (micState == recordState.STOP){
+                if (micState == recordState.STOP) {
                     toogleRecordState();
+                }
+                else if (micState == recordState.ERROR) {
+                    toogleStopState();
                 }
                 else {
                     toogleStopAndProcessState();

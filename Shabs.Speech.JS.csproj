@@ -495,6 +495,7 @@
     <Content Include="docs\speech.1.0.0.js\resources\prettify\prettify.js" />
     <Content Include="docs\speech.1.0.0.js\source\speech.1.0.0.html" />
     <Content Include="docs\speech.1.0.0.js\styles-8184dad50dadb76aad743829a7c19ed0.css" />
+    <Content Include="images\error.gif" />
     <Content Include="images\processing.gif" />
     <Content Include="LICENSE.md" />
     <Content Include="README.md" />
