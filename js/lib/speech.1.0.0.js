@@ -382,8 +382,9 @@ var Bing;
                             _this.context = new AudioContext();
                         }
                         _this.currentSource = _this.context.createMediaStreamSource(stream);
-                    }, function () {
-                        _this.HandleError();
+                    }, function (err) {
+                        console.log("Browser block the call");
+                        _this.onerror(err);                        
                     });
                 } catch (err) {
                     if (this.onerror) {
