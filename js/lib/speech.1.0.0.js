@@ -387,7 +387,7 @@ var Bing;
                         _this.onerror(err);                        
                     });
                 } catch (err) {
-                    if (this.onerror) {
+                    if (_this.onerror) {
                         _this.onerror(err);
                     }
                 }
@@ -395,7 +395,12 @@ var Bing;
                 this.currentSource = this.mediaSource;
             }
         };
-        Speech.prototype.stop = function () {           
+        Speech.prototype.stop = function () {
+            var isAudioConnected = (this._currentSource | this._currentDestination)
+
+            if (!isAudioConnected)
+                this.onerror("No audio recorded");
+
             if (this._currentSource) {
                 Platform.getCU().done(function (cu) {
                     cu.disconnect();
