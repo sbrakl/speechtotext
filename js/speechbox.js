@@ -33,6 +33,10 @@ var speechToTextBlock = function (micId, outputTextId) {
     var micState = recordState.STOP;
 
     function initSpeechToTextclient() {
+        //Set this item to tell speech API to use HTTP instead of NPAPI and PPAPI client
+        localStorage.setItem("useHttp", true);
+
+        //Registration of Speech to text client
         client = Microsoft.ProjectOxford.SpeechRecognition.SpeechRecognitionServiceFactory.createMicrophoneClient(
                         speechToTextMode,
                         languangeLocale,
@@ -41,8 +45,18 @@ var speechToTextBlock = function (micId, outputTextId) {
 
         client.onError = function (errorCode, errorstring) {
             console.log(errorstring);
-            showerrormessage(errorstring);
-            toogleErrorState();
+            var errorObj = JSON.parse(errorstring)
+            if (errorObj.isTrusted == false) {
+                toogleStopState();
+                var strmsg = "Didn't recognize the voice";
+                showerrormessage(strmsg);
+                
+            }
+            else {
+                toogleErrorState();
+                //Other error than speech not recognized
+                showerrormessage(errorstring);
+            }                                    
         }
 
         client.onPartialResponseReceived = function (response) {
@@ -69,12 +83,12 @@ var speechToTextBlock = function (micId, outputTextId) {
     }
 
     function showerrormessage(msg) {
-        $errdiv.show();
+        $errdiv.removeClass("hide");        
         $("#errmsg").html(msg);
     }
 
     function hideerrormessage() {
-        $errdiv.hide();
+        $errdiv.addClass("hide");        
     }
 
     function toogleRecordState() {
@@ -109,7 +123,7 @@ var speechToTextBlock = function (micId, outputTextId) {
         $imgBtn.removeClass('record');
         $imgBtn.siblings("#infotext").text("Press mic button to record, release to stop");
         micState = recordState.STOP;
-        client.endMicAndRecognition();
+        //client.endMicAndRecognition();
     }
 
     function toogleErrorState() {

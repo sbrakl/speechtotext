@@ -396,7 +396,10 @@ var Bing;
             }
         };
         Speech.prototype.stop = function () {
-            var isAudioConnected = (this._currentSource | this._currentDestination)
+            console.log("Mic Stop Called");
+            var isCurrentSourceDefine = !!this._currentSource;
+            var isCurrentDestinationDefine = !!this._currentDestination;
+            var isAudioConnected = (isCurrentSourceDefine | isCurrentDestinationDefine)
 
             if (!isAudioConnected)
                 this.onerror("No audio recorded");
